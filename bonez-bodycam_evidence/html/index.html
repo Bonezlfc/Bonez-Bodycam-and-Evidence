@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evidence Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="viewer">
+
+    <!-- ── Shared header ── -->
+    <div id="header">
+        <div id="header-left">
+            <div id="header-title">San Andreas United &mdash; Evidence Playback System</div>
+            <div id="header-sub">EVIDENCE HUB</div>
+        </div>
+        <button id="btn-close">&#x2715; CLOSE</button>
+    </div>
+
+    <!-- ── Hub page: unit search + clip list ── -->
+    <div id="hub-page">
+        <div id="hub-search-bar">
+            <input id="hub-input" type="text" placeholder="Discord ID (e.g. 313541362806947842)&hellip;" autocomplete="off" spellcheck="false">
+            <button id="hub-search-btn">SEARCH</button>
+        </div>
+        <div id="hub-notice">Enter a unit ID above and press SEARCH to load clips.</div>
+        <div id="clip-list"></div>
+    </div>
+
+    <!-- ── Player page: video + metadata sidebar ── -->
+    <div id="player-page">
+
+        <div id="video-wrap">
+            <video
+                id="footage"
+                controls
+                autoplay
+                playsinline
+                preload="auto"
+            ></video>
+            <div id="video-overlay-text">[ NO FOOTAGE ]</div>
+            <div id="export-status"></div>
+        </div>
+
+        <div id="sidebar">
+
+            <div class="meta-section-label">Clip Details</div>
+
+            <div class="meta-row">
+                <div class="meta-label">Unit</div>
+                <div class="meta-value accent" id="meta-unit">—</div>
+            </div>
+
+            <div class="meta-row">
+                <div class="meta-label">Clip ID</div>
+                <div class="meta-value" id="meta-clipid" style="font-size:10px">—</div>
+            </div>
+
+            <div class="meta-row">
+                <div class="meta-label">Trigger</div>
+                <div class="meta-value" id="meta-trigger">—</div>
+            </div>
+
+            <div class="meta-row">
+                <div class="meta-label">Date</div>
+                <div class="meta-value" id="meta-date">—</div>
+            </div>
+
+            <div class="meta-row">
+                <div class="meta-label">Duration</div>
+                <div class="meta-value" id="meta-duration">—</div>
+            </div>
+
+
+            <div class="meta-row">
+                <div class="meta-label">Status</div>
+                <div class="meta-value" id="meta-status">—</div>
+            </div>
+
+            <div id="action-buttons">
+                <button id="btn-back"   class="action-btn">&#x2190; BACK TO HUB</button>
+                <button id="btn-export" class="action-btn">EXPORT TO CHAT</button>
+                <button id="btn-delete" class="action-btn red">DELETE CLIP</button>
+            </div>
+
+        </div><!-- /sidebar -->
+    </div><!-- /player-page -->
+
+    <!-- ── Footer ── -->
+    <div id="footer">
+        <span>SAU EVIDENCE SYSTEM v1.0</span>
+        <span>COURT USE ONLY &mdash; UNAUTHORIZED ACCESS PROHIBITED</span>
+    </div>
+
+</div><!-- /viewer -->
+
+<script type="module" src="cfx_renderer.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

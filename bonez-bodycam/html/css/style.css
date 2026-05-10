@@ -1,0 +1,256 @@
+/* ─────────────────────────────────────────────────────────────
+   Bonez-Bodycam — NUI overlay stylesheet
+   Three styles: Axon, Motorola, Generic
+───────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'KlartextMono';
+  src: url('../fonts/KlartextMonoBold.ttf') format('truetype');
+}
+
+/* ── Reset / Base ──────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow: hidden;
+  user-select: none;
+  background: transparent;
+  width: 100vw;
+  height: 100vh;
+}
+
+.overlay {
+  position: absolute;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   AXON STYLE
+   Matches axonbody3 reference: floating text, KlartextMono,
+   4-direction black outline, logo top-right of block.
+═══════════════════════════════════════════════════════════════ */
+
+#axon {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12em;
+  font-family: 'KlartextMono', 'Courier New', monospace;
+  font-weight: 600;
+}
+
+/* ── Scale ── */
+#axon.scale-small  { font-size: 0.9vw;  }
+#axon.scale-medium { font-size: 1.2vw;  }
+#axon.scale-large  { font-size: 1.6vw;  }
+
+/* ── Corner anchoring ── */
+#axon.pos-topright    { top: 2.5vw;    right: 1.5vw;  }
+#axon.pos-topleft     { top: 2.5vw;    left: 1.5vw;   }
+#axon.pos-bottomright { bottom: 2.5vw; right: 1.5vw;  }
+#axon.pos-bottomleft  { bottom: 2.5vw; left: 1.5vw;   }
+
+/* ── Row 1: rec dot + date + logo ── */
+#axon-row1 {
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  position: relative;
+}
+
+#axon-rec {
+  width: 0.6em;
+  height: 0.6em;
+  background: rgb(210, 35, 35);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: opacity 0.08s;
+}
+
+#axon-date {
+  white-space: nowrap;
+  color: #ffffff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 1em;
+  line-height: 1;
+}
+
+#axon-logo {
+  width: 2.8vw;
+  height: 2.8vw;
+  object-fit: contain;
+  opacity: 0.80;
+  flex-shrink: 0;
+  margin-left: 0.3em;
+}
+
+/* ── Device + extra lines ── */
+#axon-device {
+  display: block;
+  color: #e0e0e0;
+  font-size: 1em;
+  line-height: 1;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  white-space: nowrap;
+}
+
+.axon-extra {
+  display: block;
+  font-size: 0.88em;
+  line-height: 1.3;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  white-space: nowrap;
+}
+
+#axon-unit    { color: #becddc; }
+#axon-svc     { color: #96cdff; }
+#axon-callout { color: #ffc032; }
+#axon-track   { color: #3cc0ff; }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   MOTOROLA STYLE
+   Full-width bottom bar. Always pinned to bottom edge.
+   Left: M badge + label.  Right: scrolling info string.
+═══════════════════════════════════════════════════════════════ */
+
+#moto {
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.62);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Scale — controls height and font-size ── */
+#moto.scale-small  { font-size: 0.78vw; height: 2.2vw; padding: 0 1.4vw; }
+#moto.scale-medium { font-size: 1.00vw; height: 2.8vw; padding: 0 1.6vw; }
+#moto.scale-large  { font-size: 1.30vw; height: 3.6vw; padding: 0 1.8vw; }
+
+/* ── Full Motorola Solutions logo (mark + wordmark), inverted white ── */
+#moto-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  /* invert flips black paths → white and white fill → black (bar shows through = logo depth) */
+  filter: invert(1);
+  opacity: 0.88;
+}
+
+#moto-badge svg {
+  height: 1.6em;
+  width: auto;
+}
+
+
+/* ── Vertical divider ── */
+#moto-sep {
+  width: 1px;
+  height: 55%;
+  background: rgb(72, 72, 72);
+  margin: 0 1.6em;
+  flex-shrink: 0;
+}
+
+/* ── Info string (scrolls to the right) ── */
+#moto-info {
+  flex: 1;
+  font-family: 'KlartextMono', 'Courier New', monospace;
+  font-size: 0.88em;
+  color: rgb(210, 210, 210);
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: right;
+  padding-right: 1.2em;
+  letter-spacing: 0.02em;
+}
+
+/* ── Blinking REC dot ── */
+#moto-dot {
+  width: 0.65em;
+  height: 0.65em;
+  background: rgb(210, 35, 35);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: opacity 0.08s;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   GENERIC STYLE  ("WATCHDOG")
+   Dark navy corner box, blue left+top borders.
+   Header: REC | TIME.  Lines below: date, info, status.
+═══════════════════════════════════════════════════════════════ */
+
+#generic {
+  background: rgba(2, 8, 22, 0.88);
+  border-left:   3px solid rgb(28, 128, 218);
+  border-top:    3px solid rgb(28, 128, 218);
+  border-right:  1px solid rgba(28, 128, 218, 0.25);
+  border-bottom: 1px solid rgba(28, 128, 218, 0.45);
+  display: flex;
+  flex-direction: column;
+  font-family: 'KlartextMono', 'Courier New', monospace;
+}
+
+/* ── Scale ── */
+#generic.scale-small  { font-size: 0.78vw; padding: 0.45em 0.7em; min-width: 12em; }
+#generic.scale-medium { font-size: 1.00vw; padding: 0.50em 0.8em; min-width: 14em; }
+#generic.scale-large  { font-size: 1.30vw; padding: 0.55em 0.9em; min-width: 16em; }
+
+/* ── Corner anchoring ── */
+#generic.pos-topright    { top: 1vw;    right: 1vw;  }
+#generic.pos-topleft     { top: 1vw;    left: 1vw;   }
+#generic.pos-bottomright { bottom: 1vw; right: 1vw;  }
+#generic.pos-bottomleft  { bottom: 1vw; left: 1vw;   }
+
+/* ── Header row ── */
+#gen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3em;
+}
+
+#gen-rec {
+  font-size: 1em;
+  font-weight: 700;
+  color: rgb(220, 50, 50);
+  letter-spacing: 0.04em;
+  transition: opacity 0.08s;
+}
+
+#gen-time {
+  font-size: 0.95em;
+  color: rgb(210, 218, 230);
+  letter-spacing: 0.04em;
+}
+
+/* ── Divider under header ── */
+#gen-rule {
+  height: 1px;
+  background: rgba(28, 128, 218, 0.45);
+  margin-bottom: 0.35em;
+}
+
+/* ── Info lines ── */
+.gen-line {
+  display: block;
+  font-size: 0.84em;
+  color: rgb(155, 168, 192);
+  white-space: nowrap;
+  line-height: 1.45;
+}
+
+#gen-date   { color: rgb(155, 168, 192); }
+#gen-info   { color: rgb(130, 186, 232); }
+#gen-status { color: rgb(255, 182, 45);  } /* overridden by JS for tracking */

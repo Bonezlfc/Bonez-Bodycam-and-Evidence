@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AXON  —  floating text, 4-way outline, no box
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="axon" class="overlay hidden">
+    <!-- Date row: blink dot + timestamp + logo -->
+    <div id="axon-row1">
+      <div id="axon-rec"></div>
+      <span id="axon-date">----</span>
+      <img id="axon-logo" src="img/logo.png" alt="">
+    </div>
+    <!-- Device line -->
+    <span id="axon-device">BODYCAM 3   x0000001</span>
+    <!-- Optional extra lines -->
+    <span class="axon-extra" id="axon-unit"></span>
+    <span class="axon-extra" id="axon-svc"></span>
+    <span class="axon-extra" id="axon-callout">&#x25CF; CALLOUT</span>
+    <span class="axon-extra" id="axon-track">&#x25CF; TRACKING</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MOTOROLA  —  full-width top bar
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="moto" class="overlay hidden">
+    <!--
+      Motorola Solutions M logo mark — paths extracted from the official SVG.
+      viewBox crops to just the circular mark (x 0-45, y 108-150).
+      filter: invert(1) flips black paths → white for the dark bar:
+        • outer black circle  → white ring
+        • inner white fill    → black (disappears into dark bar = "hole" = logo structure preserved)
+        • black M shape       → white M
+    -->
+    <!--
+      Full Motorola Solutions logo (mark + wordmark).
+      viewBox crops the 256×256 SVG to just the content strip (y 108-148).
+      filter: invert(1) on the container flips all black → white for the dark bar.
+    -->
+    <div id="moto-badge">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 108 256 40">
+        <path fill="#fff" d="M22.3,141.13c-7.24,0-13.13-5.9-13.13-13.14s5.89-13.12,13.13-13.12,13.13,5.88,13.13,13.12-5.89,13.14-13.13,13.14"/>
+        <path d="M22.29,114.71c-7.34,0-13.29,5.97-13.29,13.29s5.95,13.29,13.29,13.29,13.29-5.94,13.29-13.29-5.85-13.29-13.29-13.29Zm-3.75,3.75l3.72,12.31,.03,.03,.03-.03,3.72-12.31,4.81,15.78h-.91s-.6-2.76-1.59-4.4c-.54-.87-1.36-1.59-2.47-1.56-.79,.01-1.48,.4-2.32,1.59-.52,.71-1.28,2.52-1.28,2.52,0,0-.77-1.8-1.28-2.52-.85-1.18-1.52-1.57-2.29-1.59-1.11-.03-1.94,.69-2.49,1.56-.98,1.65-1.59,4.4-1.59,4.4h-.91l4.81-15.78h0Zm50.06,4.78c-.68,0-1.47,.1-2.09,.23-2.65,.53-5.97,2.89-5.39,5.96,.48,2.57,3.96,3.97,7.88,3.2,3.68-.7,6.08-3.53,5.59-6.01-.51-2.45-3.38-3.37-5.99-3.37h0Zm25.7,0c-.69,0-1.49,.1-2.11,.23-2.64,.53-5.99,2.89-5.41,5.96,.5,2.57,4,3.97,7.93,3.2,3.67-.7,6.05-3.53,5.54-6.01-.49-2.45-3.35-3.37-5.94-3.37Zm27.91,0c-.7,0-1.47,.1-2.11,.23-2.62,.53-5.97,2.89-5.39,5.96,.49,2.57,3.97,3.97,7.88,3.2,3.68-.7,6.09-3.53,5.56-6.01-.48-2.45-3.36-3.37-5.94-3.37Zm40.01,.05c-2.44,0-4.19,1-4.66,2.74-.07,.24-.1,.46-.1,.65,0,1.4,1.53,1.68,2.99,1.86,1.48,.18,2.92,.29,2.89,1.16,0,.08,0,.18-.03,.28-.25,.94-1.46,1.66-3.3,1.66-1.49,0-2.36-.52-2.37-1.43,0-.12,.02-.24,.05-.38l.03-.08h-1.46l-.03,.05c-.04,.23-.05,.45-.05,.65,0,1.56,1.26,2.29,3.5,2.29,2.65,0,4.55-1.06,5.03-2.87,.06-.22,.1-.43,.1-.63,0-.81-.54-1.41-1.66-1.61l-3.17-.58c-.85-.15-1.08-.47-1.08-.83,0-.08,0-.17,.03-.25,.25-.96,1.48-1.59,2.74-1.59,1.33,0,2.39,.29,2.39,1.26,0,.08-.01,.18-.03,.28v.05h1.43l.03-.03c.04-.21,.05-.4,.05-.58,0-1.63-1.68-2.09-3.35-2.09h0Zm11.27,0c-3.76,0-5.74,2.6-6.32,4.73-.12,.45-.2,.9-.2,1.36,0,.87,.25,1.71,.88,2.34,.63,.63,1.63,1.03,3.12,1.03,3.76,0,5.74-2.57,6.32-4.71,.12-.45,.18-.92,.18-1.38,0-.87-.23-1.71-.86-2.34-.63-.63-1.63-1.03-3.12-1.03h0Zm47.19,0c-3.77,0-5.75,2.6-6.32,4.73-.12,.45-.18,.9-.18,1.36,0,.87,.23,1.71,.86,2.34,.63,.63,1.63,1.03,3.12,1.03,3.76,0,5.74-2.57,6.32-4.71,.12-.45,.2-.92,.2-1.38,0-.87-.25-1.71-.88-2.34-.63-.63-1.63-1.03-3.12-1.03Zm22.95,0c-2.44,0-4.19,1-4.66,2.74-.07,.24-.1,.46-.1,.65,0,1.4,1.53,1.68,2.99,1.86,1.49,.18,2.94,.29,2.92,1.16,0,.08-.02,.18-.05,.28-.25,.94-1.43,1.66-3.27,1.66-1.49,0-2.39-.53-2.39-1.43,0-.12,.02-.24,.05-.38l.03-.08h-1.46v.05c-.04,.23-.08,.45-.08,.65,0,1.56,1.26,2.29,3.5,2.29,2.65,0,4.55-1.06,5.03-2.87,.06-.22,.1-.43,.1-.63,0-.81-.54-1.41-1.66-1.61l-3.17-.58c-.85-.15-1.08-.47-1.08-.83,0-.08,.03-.17,.05-.25,.25-.95,1.46-1.59,2.72-1.59,1.33,0,2.39,.29,2.39,1.26,0,.08-.01,.18-.03,.28v.05h1.46v-.03c.04-.21,.08-.4,.08-.58,0-1.63-1.7-2.09-3.37-2.09h0Zm-62.89,.23l-.03,.05-2.39,8.96h8.08l.28-1.11h-6.69l2.14-7.9h-1.38Zm47.16,0l-2.42,9.01h1.38l2.01-7.52,3.4,7.52h1.81l2.42-9.01h-1.38v.05l-2.01,7.5-3.4-7.55h-1.81Zm-38.03,.03l-1.43,5.34c-.12,.44-.18,.84-.18,1.21,0,1.77,1.33,2.66,3.35,2.67,2.43,0,4.52-1.29,5.21-3.85l1.46-5.36h-1.38l-.03,.03-1.43,5.39c-.45,1.68-1.73,2.69-3.55,2.69-1.47,0-2.21-.65-2.21-1.79,0-.27,.04-.56,.13-.88l1.46-5.44h-1.38Zm10.57,0l-.33,1.18h3.78l-2.09,7.8h1.38l2.09-7.8h3.77l.33-1.18h-8.93Zm11.17,0v.03l-2.42,8.96h1.38l2.42-8.98h-1.38Zm-155.66,.03l-3.27,3.83-1.13-3.77h-4.48l-2.62,8.86h2.82l1.43-4.88,1.28,4.88h1.81l4.15-4.58-1.33,4.58h3.6l2.49-8.91h-4.76Zm20.16,0l-.73,2.92h3.72l-1.43,5.99h3.47l1.56-6.01h3.8l.65-2.84-11.05-.05h0Zm68.6,0l-6.01,8.91h2.99l1.03-1.54,.03-.05h4.25v.05l.38,1.54h3.5l-2.01-8.91h-4.15Zm-41.78,.05l-2.54,8.86h3.3l.76-2.67,2.64,.05c.96-.1,1.01,.58,1.01,.58,0,0-.04,.61-.1,1.23-.04,.69,.63,.81,.63,.81h3.57c-.29-.23-.3-.69-.3-.98,0-.22,.37-.76,.25-1.61-.08-.74-.91-.93-1.03-1.03-.11-.04,.03-.18,.03-.18,0,0,2.25-.64,2.47-2.77,.26-2.12-2.19-2.29-2.19-2.29h-8.48Zm27.81,0l-2.29,8.86h8.96l.63-2.44h-5.54l1.64-6.42h-3.4Zm42.46,.78c1.75,0,2.76,.98,2.77,2.52,0,.34-.05,.71-.15,1.11-.58,2.17-2.44,3.62-4.58,3.62-1.75,0-2.79-.95-2.79-2.49,0-.34,.07-.71,.18-1.11,.58-2.17,2.44-3.65,4.58-3.65Zm47.19,0c1.75,0,2.79,.98,2.79,2.52,0,.34-.07,.71-.18,1.11-.58,2.17-2.44,3.62-4.58,3.62-1.75,0-2.76-.95-2.77-2.49,0-.34,.05-.71,.15-1.11,.59-2.17,2.44-3.65,4.58-3.65Zm-98.65,1.13c.13,0,.28,0,.43,0,1.08,.09,2.12,.54,2.29,1.36,.5,2.45-2.11,3.48-1.81,3.32-1.5,.78-3.81,.52-4.08-1.03-.27-1.48,.88-2.97,1.84-3.32,.61-.22,.95-.3,1.33-.33Zm-53.55,.03c.13,0,.25,0,.38,.03,1.07,0,2.15,.49,2.29,1.31,.52,2.45-2.09,3.48-1.76,3.32-1.52,.78-3.85,.52-4.1-1.03-.27-1.48,.91-2.97,1.86-3.32,.51-.17,.94-.28,1.33-.3h0Zm25.67,0c.14,0,.28,0,.4,.03,1.05,0,2.11,.49,2.26,1.31,.54,2.45-2.08,3.48-1.76,3.32-1.52,.78-3.86,.52-4.1-1.03-.26-1.48,.9-2.97,1.86-3.32,.5-.17,.93-.28,1.33-.3h0Zm11.88,.1l3.67,.03s.71-.05,.65,.68c-.05,.84-.96,1.01-.96,1.01h-3.8l.43-1.71h0Zm40.17,.53l.6,2.62h-2.37l1.76-2.62Z"/>
+      </svg>
+    </div>
+    <div id="moto-sep"></div>
+    <span id="moto-info"></span>
+    <div id="moto-dot"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GENERIC  —  corner box, blue accents
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="generic" class="overlay hidden">
+    <div id="gen-header">
+      <span id="gen-rec">&#x25CF; REC</span>
+      <span id="gen-time">00:00:00</span>
+    </div>
+    <div id="gen-rule"></div>
+    <span class="gen-line" id="gen-date"></span>
+    <span class="gen-line" id="gen-info"></span>
+    <span class="gen-line" id="gen-status"></span>
+  </div>
+
+<script>
+/* ─────────────────────────────────────────────────────────────
+   State
+───────────────────────────────────────────────────────────── */
+var S = {
+  visible: false,
+  style: 'axon',
+  position: 'topright',
+  scale: 'medium',
+  uid: '1',
+  unitLabel: '',
+  showUnit: true,
+  showService: true,
+  showCallout: true,
+  showTracking: true,
+  serviceType: false,
+  attachedCallout: false,
+  trackingUnit: false
+};
+
+/* Server time sync — adjusted epoch so getUTC*() returns server local time */
+var serverTimeMs   = null;   // adjusted epoch in ms (server local time as "fake UTC")
+var serverTimeSyncAt = null; // Date.now() when we received the epoch
+
+var recOn = true;
+
+/* ─────────────────────────────────────────────────────────────
+   Element cache
+───────────────────────────────────────────────────────────── */
+var E = {
+  axon:       document.getElementById('axon'),
+  axonDate:   document.getElementById('axon-date'),
+  axonDevice: document.getElementById('axon-device'),
+  axonUnit:   document.getElementById('axon-unit'),
+  axonSvc:    document.getElementById('axon-svc'),
+  axonCallout:document.getElementById('axon-callout'),
+  axonTrack:  document.getElementById('axon-track'),
+  axonRec:    document.getElementById('axon-rec'),
+
+  moto:       document.getElementById('moto'),
+  motoDot:    document.getElementById('moto-dot'),
+  motoInfo:   document.getElementById('moto-info'),
+
+  gen:        document.getElementById('generic'),
+  genRec:     document.getElementById('gen-rec'),
+  genTime:    document.getElementById('gen-time'),
+  genDate:    document.getElementById('gen-date'),
+  genInfo:    document.getElementById('gen-info'),
+  genStatus:  document.getElementById('gen-status')
+};
+
+/* ─────────────────────────────────────────────────────────────
+   Helpers
+───────────────────────────────────────────────────────────── */
+/* Returns callsign if set, otherwise the raw uid */
+function unitDisplay() { return (S.unitLabel && S.unitLabel !== '') ? S.unitLabel : S.uid; }
+
+function p2(n) { return String(n).padStart(2, '0'); }
+function p7(n) { return String(n).padStart(7, '0'); }
+function p6(n) { return String(n).padStart(6, '0'); }
+
+function show(el) { el.classList.remove('hidden'); }
+function hide(el) { el.classList.add('hidden');    }
+function toggle(el, on) { on ? show(el) : hide(el); }
+
+function swapClass(el, prefix, val) {
+  var cls = el.className.split(' ').filter(function(c) {
+    return c.indexOf(prefix) !== 0;
+  });
+  if (val) cls.push(prefix + val);
+  el.className = cls.join(' ');
+}
+
+/* Returns a Date object representing the server's current local time.
+   Uses the synced epoch + elapsed ms since sync for accuracy.
+   Falls back to client UTC before the first sync arrives. */
+function getServerDate() {
+  if (serverTimeMs !== null) {
+    return new Date(serverTimeMs + (Date.now() - serverTimeSyncAt));
+  }
+  return new Date(); // pre-sync fallback
+}
+
+function getUTC() {
+  var d = getServerDate();
+  return {
+    iso:  d.getUTCFullYear() + '-' + p2(d.getUTCMonth()+1) + '-' + p2(d.getUTCDate())
+          + ' ' + p2(d.getUTCHours()) + ':' + p2(d.getUTCMinutes()) + ':' + p2(d.getUTCSeconds())
+          + ' +0000',
+    time: p2(d.getUTCHours()) + ':' + p2(d.getUTCMinutes()) + ':' + p2(d.getUTCSeconds()),
+    date: d.getUTCFullYear() + '-' + p2(d.getUTCMonth()+1) + '-' + p2(d.getUTCDate()),
+    dmy:  p2(d.getUTCDate()) + '/' + p2(d.getUTCMonth()+1) + '/' + d.getUTCFullYear()
+  };
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Motorola info string (rebuilt on clock tick + state change)
+───────────────────────────────────────────────────────────── */
+function buildMotoInfo(t) {
+  var parts = [];
+  if (S.showUnit) parts.push('U:' + unitDisplay());
+  parts.push(t.dmy, t.time, 'BWC2-' + p6(S.uid));
+  if (S.showService  && S.serviceType)     parts.push(String(S.serviceType).toUpperCase());
+  if (S.showCallout  && S.attachedCallout) parts.push('CALLOUT');
+  if (S.showTracking && S.trackingUnit)    parts.push('TRACKING');
+  E.motoInfo.textContent = parts.join('   ');
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Apply full state update from Lua
+───────────────────────────────────────────────────────────── */
+function applyState(data) {
+  for (var k in data) {
+    if (k !== 'action') S[k] = data[k];
+  }
+
+  var showAxon  = S.visible && S.style === 'axon';
+  var showMoto  = S.visible && S.style === 'motorola';
+  var showGen   = S.visible && S.style === 'generic';
+
+  toggle(E.axon, showAxon);
+  toggle(E.moto, showMoto);
+  toggle(E.gen,  showGen);
+
+  if (!S.visible) return;
+
+  /* ── position + scale classes ── */
+  swapClass(E.axon, 'pos-', S.position);
+  swapClass(E.gen,  'pos-', S.position);
+  swapClass(E.axon, 'scale-', S.scale);
+  swapClass(E.moto, 'scale-', S.scale);
+  swapClass(E.gen,  'scale-', S.scale);
+
+  /* ── AXON content ── */
+  if (showAxon) {
+    E.axonDevice.textContent = 'BODYCAM 3   x' + p7(parseInt(S.uid) || 0);
+
+    toggle(E.axonUnit,    S.showUnit);
+    if (S.showUnit) E.axonUnit.textContent = 'UNIT ' + unitDisplay();
+
+    toggle(E.axonSvc, S.showService && !!S.serviceType);
+    if (S.showService && S.serviceType)
+      E.axonSvc.textContent = String(S.serviceType).toUpperCase();
+
+    toggle(E.axonCallout, S.showCallout  && !!S.attachedCallout);
+    toggle(E.axonTrack,   S.showTracking && !!S.trackingUnit);
+  }
+
+  /* ── GENERIC content ── */
+  if (showGen) {
+    var infoParts = [];
+    if (S.showUnit) infoParts.push('UNIT:' + unitDisplay());
+    if (S.showService && S.serviceType)
+      infoParts.push(String(S.serviceType).toUpperCase());
+    toggle(E.genInfo, infoParts.length > 0);
+    if (infoParts.length) E.genInfo.textContent = infoParts.join('  ');
+
+    var statusParts = [];
+    if (S.showCallout  && S.attachedCallout) statusParts.push('> CALLOUT');
+    if (S.showTracking && S.trackingUnit)    statusParts.push('> TRACKING');
+    toggle(E.genStatus, statusParts.length > 0);
+    if (statusParts.length) {
+      var isTracking = S.trackingUnit && !S.attachedCallout;
+      E.genStatus.style.color = isTracking ? '#3cc0ff' : '#ffb62d';
+      E.genStatus.textContent = statusParts.join('  ');
+    }
+  }
+
+  /* ── MOTOROLA content ── */
+  if (showMoto) buildMotoInfo(getUTC());
+
+  /* immediate clock update */
+  tickClock();
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Clock tick — called every second and on state change
+───────────────────────────────────────────────────────────── */
+function tickClock() {
+  if (!S.visible) return;
+  var t = getUTC();
+  if (S.style === 'axon')      E.axonDate.textContent = t.iso;
+  else if (S.style === 'motorola') buildMotoInfo(t);
+  else { E.genTime.textContent = t.time; E.genDate.textContent = t.date; }
+}
+
+setInterval(tickClock, 1000);
+
+/* ─────────────────────────────────────────────────────────────
+   REC blink
+───────────────────────────────────────────────────────────── */
+setInterval(function() {
+  if (!S.visible) return;
+  recOn = !recOn;
+  E.axonRec.style.opacity  = recOn ? '1' : '0';
+  E.motoDot.style.opacity  = recOn ? '1' : '0';
+  E.genRec.style.opacity   = recOn ? '1' : '0';
+}, 900);
+
+/* ─────────────────────────────────────────────────────────────
+   Proximity beep audio
+   Uses the beep.wav bundled with the resource (from axonbody3).
+   Volume is set by the Lua client before each play call so the
+   sound fades naturally with distance.
+───────────────────────────────────────────────────────────── */
+var beepAudio = new Audio('sound/beep.wav');
+beepAudio.preload = 'auto';
+
+function playBeep(volume) {
+  beepAudio.volume = Math.max(0, Math.min(1, volume || 0.5));
+  beepAudio.currentTime = 0;
+  beepAudio.play().catch(function() {
+    // Browser autoplay policy can block first play; subsequent plays work fine
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Record toggle sounds — one pair per overlay style
+───────────────────────────────────────────────────────────── */
+var recSounds = {
+  axon:     { on: new Audio('sound/axon_rec_on.wav'),     off: new Audio('sound/axon_rec_off.wav')     },
+  motorola: { on: new Audio('sound/motorola_rec_on.wav'), off: new Audio('sound/motorola_rec_off.wav') },
+  generic:  { on: new Audio('sound/generic_rec_on.wav'),  off: new Audio('sound/generic_rec_off.wav')  }
+};
+(function() {
+  for (var style in recSounds) {
+    recSounds[style].on.preload  = 'auto';
+    recSounds[style].off.preload = 'auto';
+  }
+})();
+
+function playRecordSound(recording, style, volume) {
+  var pair = recSounds[style] || recSounds['generic'];
+  var snd  = recording ? pair.on : pair.off;
+  snd.volume = Math.max(0, Math.min(1, volume || 0.8));
+  snd.currentTime = 0;
+  snd.play().catch(function() {});
+}
+
+/* ─────────────────────────────────────────────────────────────
+   NUI message listener
+───────────────────────────────────────────────────────────── */
+window.addEventListener('message', function(ev) {
+  var d = ev.data;
+  if (!d) return;
+  if (d.action === 'setState')        applyState(d);
+  if (d.action === 'playBeep')        playBeep(d.volume);
+  if (d.action === 'playRecordSound') playRecordSound(d.recording, d.style, d.volume);
+  if (d.action === 'syncServerTime') {
+    serverTimeMs   = d.serverTimeMs;
+    serverTimeSyncAt = Date.now();
+  }
+});
+
+/* init clock */
+tickClock();
+</script>
+</body>
+</html>
