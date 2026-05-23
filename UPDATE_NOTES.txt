@@ -1,0 +1,62 @@
+================================================================================
+  BONEZ-BODYCAM — UPDATE NOTES
+================================================================================
+
+--------------------------------------------------------------------------------
+  BUG FIXES  (2026-05-22)
+--------------------------------------------------------------------------------
+
+[FIX 1] SCRIPT ERROR: attempt to call a nil value (field 'Open') — main.lua:10
+  Resource:  bonez-bodycam
+  File:      client/menu.lua
+
+  Root cause:
+    BodycamMenu.Open() was defined at the very bottom of menu.lua (line 218).
+    If any RageUI call above it threw an error at resource startup (e.g. a
+    RageUI version mismatch, missing global, etc.), Lua would abort the file
+    before that function was ever assigned — leaving BodycamMenu.Open as nil.
+    When a player triggered the menu keybind, main.lua:10 would then crash.
+
+  What changed:
+    - BodycamMenu.Open() is now defined near the TOP of menu.lua, before any
+      RageUI calls, so main.lua can never error on it.
+    - The entire RageUI menu creation (CreateMenu + CreateWhile) is now wrapped
+      in pcall. If RageUI init fails you will now see a clear message in the
+      server console:
+        [BODYCAM] RageUI menu init failed: <reason>
+    - If init failed, calling the keybind shows a player notification
+      "Settings menu unavailable — check server console." instead of a crash.
+
+  Action required:
+    None — this is a code-only fix. If the menu was previously broken, check
+    the server console for the new [BODYCAM] error message to find the real
+    cause (most likely RageUI not installed or wrong version).
+
+
+[FIX 2] [BCE] Video presigned URL failed: HTTP 401
+  Resource:  bonez-bodycam_evidence
+  File:      server/apiKeys.lua  +  server/main.lua
+
+  Root cause:
+    ApiKeys.Fivemanage in server/apiKeys.lua was left as an empty string ''.
+    The presigned URL request to Fivemanage sent an empty Authorization header,
+    which Fivemanage rejects with HTTP 401 Unauthorized.
+
+  What changed:
+    - Added a startup validation in server/main.lua. When the resource starts,
+      if ApiKeys.Fivemanage is blank it now immediately prints:
+        [BCE] MISSING API KEY — ApiKeys.Fivemanage is empty in server/apiKeys.lua.
+        [BCE] Video uploads will fail with HTTP 401 until a valid Fivemanage VIDEO key is set.
+      This makes the misconfiguration obvious at start instead of failing
+      silently mid-recording.
+
+  Action required (SERVER OWNER):
+    1. Go to https://fivemanage.com/dashboard
+    2. Navigate to API Keys → Create Key
+    3. Set the type to VIDEO (NOT Image — different key type)
+    4. Copy the key and paste it into:
+         bonez-bodycam_evidence/server/apiKeys.lua
+         ApiKeys.Fivemanage = 'PASTE_YOUR_KEY_HERE'
+    5. Restart the bonez-bodycam_evidence resource.
+
+================================================================================

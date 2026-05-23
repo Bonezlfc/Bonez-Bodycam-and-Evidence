@@ -286,9 +286,14 @@ AddEventHandler('bonez-bodycam_evidence:saveVideoUrl', function(clipId, videoUrl
     end)
 end)
 
--- ── On resource start: retry any failed uploads ───────────────────────────
+-- ── On resource start: validate config + retry failed uploads ────────────
 AddEventHandler('onResourceStart', function(name)
-    if name == GetCurrentResourceName() then
-        Storage.RetryFailedClips()
+    if name ~= GetCurrentResourceName() then return end
+
+    if not ApiKeys.Fivemanage or ApiKeys.Fivemanage == '' then
+        print('^1[BCE] MISSING API KEY — ApiKeys.Fivemanage is empty in server/apiKeys.lua.^7')
+        print('^3[BCE] Video uploads will fail with HTTP 401 until a valid Fivemanage VIDEO key is set.^7')
     end
+
+    Storage.RetryFailedClips()
 end)
