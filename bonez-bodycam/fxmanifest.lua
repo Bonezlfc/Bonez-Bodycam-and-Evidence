@@ -33,6 +33,7 @@ shared_scripts {
 }
 
 client_scripts {
+    '@RageUI/imports/client.lua',
     'client/settings.lua',
     'client/ers.lua',
     'client/menu.lua',
